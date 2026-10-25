@@ -1,0 +1,4 @@
+model: gpt-image-1.5
+size: 1536x1024
+
+Close, quiet still life on a dark walnut desk: two plain cream file folders slightly fanned, a brass paper clip, a fountain pen with its cap off, a ceramic cup of green tea, raking late-afternoon window light from the left. Composition weighted to the right, the left half falls into soft navy shadow. Documentary editorial photograph, shot on a full-frame camera with a 35mm lens at f/2.8, natural available light only. Muted, restrained color grade: deep navy blues and slate shadows, warm ivory paper tones, a few small champagne-brass highlights. Subtle 35mm film grain, gentle lens falloff, true-to-life textures, slight imperfections, realistic depth of field. No people, no faces, no hands. No readable text, letters, numbers, logos or signage anywhere; any paper or book spines are out of focus or blank. Calm, quiet, trustworthy mood. Not glossy, not fantasy, not illustrated, no CGI look, no lens flares, no vignette overlays.

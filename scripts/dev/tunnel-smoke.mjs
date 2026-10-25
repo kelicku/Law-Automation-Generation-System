@@ -1,0 +1,47 @@
+// Browser smoke test over the public tunnel URL (desktop + smartphone).
+import { chromium, devices } from "@playwright/test";
+const U = process.argv[2]; const CODE = process.argv[3];
+const b = await chromium.launch();
+const out = [];
+const ok = (k, v) => out.push(`${v ? "OK  " : "FAIL"} ${k}`);
+// desktop flow
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, locale: "ja-JP" });
+const page = await ctx.newPage();
+const errors = []; page.on("pageerror", (e) => errors.push(e.message)); page.on("console", (m) => { if (m.type() === "error" && !/status of 4\d\d/.test(m.text())) errors.push(m.text()); });
+await page.goto(U + "/");
+await page.getByTestId("landing-demo").click();
+await page.getByLabel("デモアクセスコード").fill(CODE);
+await page.getByRole("button", { name: "開始" }).click();
+await page.waitForURL(/\/app/);
+ok("demo access code → dashboard", await page.getByRole("heading", { level: 1 }).textContent().then((t) => t.includes("青藍")));
+const cookie = (await ctx.cookies()).find((c) => c.name === "aiip_session");
+ok("session cookie Secure+HttpOnly over HTTPS", !!cookie?.secure && !!cookie?.httpOnly);
+await page.goto(U + "/app/radar");
+await page.getByTestId("collect").click();
+await page.getByTestId("collect-summary").waitFor({ timeout: 60000 });
+ok("collection over tunnel: " + (await page.getByTestId("collect-summary").textContent()).slice(0, 60), true);
+await page.goto(U + "/app/radar?q=" + encodeURIComponent("東雲"));
+await page.getByTestId("radar-row").first().locator("a").first().click();
+await page.getByTestId("generate-article").click();
+await page.waitForURL(/\/app\/articles\//, { timeout: 60000 });
+ok("AI generation (simulation) → editor", (await page.getByTestId("article-title").inputValue()).includes("東雲"));
+await page.getByTestId("tab-approval").click();
+await page.getByTestId("action-submit").click(); await page.getByTestId("action-approve").waitFor();
+await page.getByTestId("action-approve").click(); await page.getByTestId("action-publish").waitFor();
+await page.getByTestId("action-publish").click();
+await page.locator("[data-status=published]").first().waitFor();
+const slug = page.url().split("/").pop();
+const art = await page.request.get(`${U}/api/articles/${slug}`); const data = await art.json();
+const pub = await page.request.get(`${U}/sites/seiran-law/${data.article.slug}`);
+ok("approved article reachable on public site", pub.status() === 200);
+ok("no console errors (desktop)", errors.length === 0);
+// smartphone view of the public page
+const m = await b.newContext({ ...devices["iPhone 13"] });
+const mp = await m.newPage();
+await mp.goto(`${U}/sites/seiran-law/${data.article.slug}`);
+const overflow = await mp.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+ok(`public page on smartphone (overflow ${overflow}px)`, overflow <= 1 && (await mp.getByRole("heading", { level: 1 }).textContent()).includes("東雲"));
+await mp.screenshot({ path: process.argv[4] + "/tunnel-mobile.png", fullPage: false });
+await page.screenshot({ path: process.argv[4] + "/tunnel-desktop.png" });
+console.log(out.join("\n")); if (errors.length) console.log(errors);
+await b.close();

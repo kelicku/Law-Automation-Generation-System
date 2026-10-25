@@ -1,0 +1,11 @@
+import { readFileSync } from "node:fs";
+import postgres from "postgres";
+const url = readFileSync(".env.neon.local", "utf8").match(/NEON_OWNER_URL=(.*)/)[1].trim();
+const sql = postgres(url, { max: 1, onnotice: () => {} });
+console.log("collection runs:");
+for (const r of await sql`select started_at, status, stats->>'newIncidents' as new, stats->>'duplicates' as dup, triggered_by is not null as by_user from collection_runs order by started_at`) console.log(" ", r.started_at.toISOString(), r.status, "new", r.new, "dup", r.dup);
+console.log("ai jobs:");
+for (const j of await sql`select created_at, kind, status, jsonb_array_length(events) as ev, error from ai_jobs order by created_at`) console.log(" ", j.created_at.toISOString(), j.kind, j.status, "events", j.ev, j.error ?? "");
+console.log("classify calls:", JSON.stringify(await sql`select provider, status, count(*)::int as n from ai_execution_logs where task = 'classify' and created_at > now() - interval '2 hours' group by 1, 2`));
+console.log("incidents:", (await sql`select count(*)::int as n from incidents`)[0].n);
+await sql.end();

@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: aiip-demo-db
+    environment:
+      POSTGRES_USER: aiip_owner
+      POSTGRES_PASSWORD: ${POSTGRES_OWNER_PASSWORD:-aiip_owner_local}
+      POSTGRES_DB: aiip_demo
+    ports:
+      - "127.0.0.1:5435:5432"
+    volumes:
+      - aiip-demo-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aiip_owner -d aiip_demo"]
+      interval: 3s
+      retries: 20
+volumes:
+  aiip-demo-data:

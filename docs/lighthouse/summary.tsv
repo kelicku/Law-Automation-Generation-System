@@ -1,0 +1,11 @@
+page	profile	perf	a11y	best	seo
+landing	mobile	58	100	100	92
+public-article	mobile	74	100	100	92
+dashboard	mobile	65	100	100	83
+radar	mobile	75	100	100	90
+editor	mobile	60	100	96	92
+landing	desktop	99	100	100	100
+public-article	desktop	94	100	100	91
+dashboard	desktop	94	100	100	90
+radar	desktop	96	100	100	90
+editor	desktop	96	100	96	90

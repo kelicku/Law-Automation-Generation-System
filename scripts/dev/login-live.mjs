@@ -1,0 +1,17 @@
+import { chromium } from "@playwright/test";
+const U = process.argv[2], CODE = process.argv[3], OUT = process.argv[4];
+const b = await chromium.launch(); const page = await (await b.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
+const bad = []; page.on("response", (r) => { if (r.status() >= 400) bad.push(`${r.status()} ${r.url()}`); });
+page.on("pageerror", (e) => bad.push("pageerror " + e.message));
+await page.goto(U + "/login", { waitUntil: "networkidle" });
+const imgs = await page.evaluate(() => [...document.images].map((i) => ({ ok: i.complete && i.naturalWidth > 0, src: i.currentSrc.split("?")[0].slice(-40) })));
+console.log("images:", JSON.stringify(imgs));
+await page.getByTestId("demo-login-seiran-lawyer").click();
+console.log("without code:", await page.locator("section[aria-labelledby=demo-heading] [role=alert]").textContent());
+await page.getByTestId("demo-code").fill(CODE);
+await page.getByTestId("demo-login-seiran-lawyer").click();
+await page.waitForURL(/\/app$/);
+console.log("with code → ", new URL(page.url()).pathname);
+await page.screenshot({ path: OUT + "/live-after-login.png" });
+console.log("errors:", bad.length ? bad : "none");
+await b.close();

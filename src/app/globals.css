@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: light; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-ivory text-ink antialiased; font-feature-settings: "palt" 1; }
+  ::selection { background: rgba(194, 166, 117, 0.35); }
+  :focus-visible { outline: 2px solid #C2A675; outline-offset: 2px; }
+  .tnum { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .eyebrow { @apply font-num text-2xs font-semibold uppercase tracking-[0.18em] text-slate; }
+  .rule { @apply border-line; }
+  .h-serif { @apply font-serif tracking-tight; }
+  .scroll-x { overflow-x: auto; scrollbar-width: thin; }
+  .grid-paper {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}

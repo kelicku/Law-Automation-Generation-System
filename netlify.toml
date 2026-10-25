@@ -1,0 +1,8 @@
+# Netlify: Next.js is detected automatically (OpenNext-based Next.js runtime).
+[build]
+  command = "npm run build && npm run build:jobs"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"

@@ -1,0 +1,81 @@
+
+> ai-incident-intelligence@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 21.9s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/31) ...
+   Generating static pages (7/31) 
+   Generating static pages (15/31) 
+   Generating static pages (23/31) 
+ ✓ Generating static pages (31/31)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                   Size  First Load JS
+┌ ƒ /                                      8.78 kB         161 kB
+├ ○ /_not-found                              995 B         104 kB
+├ ƒ /api/articles/[id]                       199 B         103 kB
+├ ƒ /api/articles/[id]/assist                199 B         103 kB
+├ ƒ /api/articles/[id]/evidence              199 B         103 kB
+├ ƒ /api/articles/[id]/precheck              199 B         103 kB
+├ ƒ /api/articles/[id]/restore               199 B         103 kB
+├ ƒ /api/articles/[id]/transition            199 B         103 kB
+├ ƒ /api/articles/[id]/versions              199 B         103 kB
+├ ƒ /api/articles/generate                   199 B         103 kB
+├ ƒ /api/auth/demo                           199 B         103 kB
+├ ƒ /api/auth/login                          199 B         103 kB
+├ ƒ /api/auth/logout                         199 B         103 kB
+├ ƒ /api/auth/quickstart                     199 B         103 kB
+├ ƒ /api/collect                             199 B         103 kB
+├ ƒ /api/demo/reset                          199 B         103 kB
+├ ƒ /api/incidents/[id]/review               199 B         103 kB
+├ ƒ /api/jobs/[id]                           199 B         103 kB
+├ ƒ /api/notifications/read                  199 B         103 kB
+├ ƒ /api/ops/backup                          199 B         103 kB
+├ ƒ /api/ops/subscription                    199 B         103 kB
+├ ƒ /api/ops/sweep                           199 B         103 kB
+├ ƒ /api/settings                            199 B         103 kB
+├ ƒ /app                                   4.77 kB         205 kB
+├ ƒ /app/approvals                           165 B         106 kB
+├ ƒ /app/articles                           1.5 kB         108 kB
+├ ƒ /app/articles/[id]                     15.9 kB         251 kB
+├ ƒ /app/articles/[id]/diff                1.99 kB         204 kB
+├ ƒ /app/articles/[id]/evidence            8.95 kB         208 kB
+├ ƒ /app/articles/[id]/preview             2.42 kB         204 kB
+├ ƒ /app/incidents/[id]                    7.15 kB         206 kB
+├ ƒ /app/inspector                          1.5 kB         108 kB
+├ ƒ /app/operations                        4.09 kB         128 kB
+├ ƒ /app/radar                             10.3 kB         209 kB
+├ ƒ /app/savings                           2.52 kB         114 kB
+├ ƒ /app/settings                          4.21 kB         150 kB
+├ ƒ /app/site                               1.5 kB         108 kB
+├ ● /demo-sources/[slug]                     199 B         103 kB
+├   ├ /demo-sources/minato-seiki-notice-1
+├   ├ /demo-sources/legal-daily-minato-1
+├   ├ /demo-sources/minato-seiki-notice-2
+├   └ [+12 more paths]
+├ ƒ /invite/[code]                           199 B         103 kB
+├ ƒ /login                                 12.7 kB         127 kB
+├ ƒ /preview-frame/[id]                     1.5 kB         108 kB
+├ ○ /robots.txt                              199 B         103 kB
+├ ƒ /sites/[tenant]                        1.49 kB         108 kB
+├ ƒ /sites/[tenant]/[slug]                  1.5 kB         108 kB
+└ ƒ /sites/[tenant]/sitemap.xml              199 B         103 kB
++ First Load JS shared by all               103 kB
+  ├ chunks/1255-dc3ddf72a1dc71a7.js        46.6 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js    54.2 kB
+  └ other shared chunks (total)            1.95 kB
+
+
+ƒ Middleware                               34.8 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
